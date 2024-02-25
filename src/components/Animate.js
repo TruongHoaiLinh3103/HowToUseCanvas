@@ -1,43 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 
-const Block = () => {
+const Animate = () => {
     const myBlock = useRef(null);
     useEffect(() => {
         const canvas = myBlock.current;
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
         const context = canvas.getContext("2d");
-
-        //Block
-        // context.fillStyle = "rgb(136, 217, 239)";
-        // context.fillRect(100, 100, 100, 100);
-        // context.fillStyle = "rgb(239, 187, 136)";
-        // context.fillRect(500, 100, 100, 100);
-        // context.fillStyle = "rgb(136, 136, 239)";
-        // context.fillRect(300, 200, 100, 100);
-
-        //Line
-        // context.beginPath();
-        // context.lineWidth = 1;
-        // context.strokeStyle = "rgb(239, 136, 184)";
-        // context.moveTo(50, 300);
-        // context.lineTo(300, 70);
-        // context.lineTo(350, 200);
-        // context.lineTo(400, 70);
-        // context.lineTo(655, 300);
-        // context.stroke();
-
-        //Arc/circle
-        // for(var i = 0; i < 50; i++){
-        //     var x = Math.random() * window.innerWidth;
-        //     var y = Math.random() * window.innerHeight;
-        //     context.beginPath();
-        //     context.lineWidth = 1;
-        //     context.strokeStyle = "rgb(175, 136, 239)";
-        //     context.arc(x, y, 50, 2 * Math.PI, 0);
-        //     context.stroke();
-        // }
-
         //Animate
         function circle(x, y, dx, dy, radius) {
             this.x = x;
@@ -74,7 +43,7 @@ const Block = () => {
             let dy = (Math.random() - 0.5) * 8;
             let radius = 50;
 
-            var Circle = new circle(700, 350, dx, dy, radius);
+            var Circle = new circle(x, y, dx, dy, radius);
 
             circleArray.push(Circle)
         }
@@ -91,9 +60,9 @@ const Block = () => {
 
     },[])
     return <canvas ref={myBlock} style={{
-        width: "500px",
-        height: "500px"
+        width: "100%",
+        height: "100%"
     }}></canvas>;
 };
 
-export default Block;
+export default Animate;
