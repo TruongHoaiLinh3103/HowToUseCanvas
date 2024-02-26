@@ -1,25 +1,51 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef} from 'react';
 
 const Animate = () => {
     const myBlock = useRef(null);
     useEffect(() => {
+
+        var move = {
+            x: undefined,
+            y: undefined
+        }
+
+        var maxRadius = 40
+        var minRadius = 6
+
+        var colorArray = [
+            "red",
+            "blue",
+            "black",
+            "yellow",
+            "violet"
+        ]
+
+        window.addEventListener("mousemove", function myFunction(event) {
+            move.x = event.x;
+            move.y = event.y;
+        });
+
         const canvas = myBlock.current;
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
         const context = canvas.getContext("2d");
         //Animate
+
         function circle(x, y, dx, dy, radius) {
             this.x = x;
             this.y = y;
             this.dx = dx;
             this.dy = dy;
             this.radius = radius;
+            this.color = colorArray[Math.floor(Math.random() * colorArray.length)]
             this.draw = () => {
                 context.beginPath();
                 context.lineWidth = 2;
-                context.strokeStyle = "rgb(175, 136, 239)";
+                // context.strokeStyle = "rgb(175, 136, 239)";
                 context.arc(this.x, this.y, this.radius, 2 * Math.PI, 0, true);
-                context.stroke();
+                // context.stroke();
+                context.fillStyle = this.color
+                context.fill()
             }
             this.circleAnimate = () => {
                 this.draw();
@@ -31,17 +57,25 @@ const Animate = () => {
                 }
                 this.x += this.dx;
                 this.y += this.dy;
+
+                if(move.x - this.x < 50  && move.x - this.x > -50 && move.y - this.y < 50 && move.y - this.y > -50){
+                    if(this.radius < maxRadius){
+                        this.radius += 1
+                    }
+                }else if(this.radius > minRadius){
+                    this.radius -= 1
+                }
             }
         }
 
         var circleArray = [];
 
         for(var i = 0; i < 500; i++){
-            let x = Math.random() * window.innerWidth;
-            let y = Math.random() * window.innerHeight;
-            let dx = (Math.random() - 0.5) * 8;
-            let dy = (Math.random() - 0.5) * 8;
+            let dx = (Math.random() - 0.5) * 2;
+            let dy = (Math.random() - 0.5) * 2;
             let radius = 50;
+            let x = Math.random() * (window.innerWidth - radius * 2) + radius;
+            let y = Math.random() * (window.innerHeight - radius * 2) + radius;
 
             var Circle = new circle(x, y, dx, dy, radius);
 
